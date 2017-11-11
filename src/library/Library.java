@@ -21,6 +21,7 @@ public class Library {
             new Thread(() -> {
                 try {
                    enter(tempUser);
+                    System.out.println(user.getName() + "\t" + user.getIp() + " is reading a book");
                     Thread.sleep(5000);
                     leave(tempUser);
                 } catch (InterruptedException e) {
