@@ -5,23 +5,21 @@ import java.util.Random;
 
 
 public class Library {
-    private int maxAmount = 12;
+    private static final int maxAmount = 12;
     private int peopleCount = 0;
     private Semaphore semaphore = new Semaphore(maxAmount);
 
     private ArrayList<User> users = new ArrayList<>();
 
-    public void enterAll(ArrayList<User> users) {
-        this.users = users;
-        this.peopleCount = users.size();
+    public void library(ArrayList<User> u) {
 
         Random random = new Random();
-        for(User user : users) {
-            final User tempUser = user;
+        for(User users : u) {
+            final User tempUser = users;
             new Thread(() -> {
                 try {
                    enter(tempUser);
-                    System.out.println(user.getName() + "\t" + user.getIp() + " is reading a book");
+                    System.out.println(tempUser.getName() + "\t" + tempUser.getIp() + " is reading a book");
                     Thread.sleep(5000);
                     leave(tempUser);
                 } catch (InterruptedException e) {
@@ -29,6 +27,9 @@ public class Library {
                 }
             }).start();
         }
+        this.users = u;
+        this.peopleCount = users.size();
+
     }
 
     public void enter(User user) throws InterruptedException {
